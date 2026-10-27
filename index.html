@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Valorant Takım Bul</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101116;color:#f5f5f5;font-family:Arial,sans-serif}
+header{padding:22px 7%;background:#191b23;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px}
+.logo{font-size:22px;font-weight:bold}
+.logo span,h1 span{color:#ff4655}
+button{padding:12px 16px;border:0;border-radius:7px;cursor:pointer;font-weight:bold}
+.red{background:#ff4655;color:white}
+.dark{background:#292b36;color:white}
+.hero{text-align:center;padding:65px 20px;background:radial-gradient(ellipse at top,#48212a,transparent 70%)}
+h1{font-size:clamp(34px,6vw,58px);margin:15px 0}
+.hero p{color:#b9bbc6;line-height:1.7}
+main{max-width:1050px;margin:auto;padding:25px 18px 60px}
+.filters,.card,.about{background:#191b23;border:1px solid #30333e;border-radius:12px;padding:18px}
+.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:20px 0}
+label{display:block;color:#b9bbc6;font-size:13px;margin-bottom:7px}
+input,select,textarea{width:100%;padding:12px;background:#101116;color:white;border:1px solid #393c48;border-radius:7px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px}
+.card h3{margin-top:0}
+.card p{color:#b9bbc6;line-height:1.6}
+.tag{display:inline-block;background:#292b36;padding:7px 9px;border-radius:5px;margin:3px;font-size:12px}
+.card button{margin-top:10px}
+.notice{color:#e9d59b;background:#29251c;padding:13px;border-radius:8px;line-height:1.6;font-size:13px;margin:20px 0}
+.about{margin-top:35px;line-height:1.8}
+footer{text-align:center;color:#9b9da8;padding:25px}
+dialog{background:#191b23;color:white;border:1px solid #444;border-radius:12px;width:min(480px,95%)}
+dialog::backdrop{background:#000b}
+.formrow{margin:14px 0}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">VALORANT <span>TAKIM BUL</span></div>
+  <button class="red" id="ac">+ İlan oluştur</button>
+</header>
+
+<section class="hero">
+  <h1>Takımını bul.<br><span>Birlikte kazan.</span></h1>
+  <p>Rütbene ve oyun tarzına uygun takım arkadaşlarını keşfet.</p>
+  <button class="red" onclick="document.getElementById('oyuncular').scrollIntoView({behavior:'smooth'})">Oyuncuları keşfet</button>
+</section>
+
+<main id="oyuncular">
+  <h2>Oyuncuları keşfet</h2>
+  <p style="color:#b9bbc6">Rütbe, rol veya oyuncu adına göre arama yap.</p>
+
+  <div class="filters">
+    <div>
+      <label for="ara">Oyuncu adı</label>
+      <input id="ara" placeholder="Oyuncu ara...">
+    </div>
+    <div>
+      <label for="rf">Rütbe</label>
+      <select id="rf">
+        <option value="">Tüm rütbeler</option>
+        <option>Demir</option><option>Bronz</option>
+        <option>Gümüş</option><option>Altın</option>
+        <option>Platin</option><option>Elmas</option>
+        <option>Yücelik</option><option>Ölümsüzlük</option>
+        <option>Radyant</option><option>Derecesiz</option>
+      </select>
+    </div>
+    <div>
+      <label for="rolf">Rol</label>
+      <select id="rolf">
+        <option value="">Tüm roller</option>
+        <option>Düellocu</option><option>Öncü</option>
+        <option>Gözcü</option><option>Kontrol Uzmanı</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="notice">
+    Aşağıdaki örnek profiller deneme amaçlıdır. Oluşturduğun ilanlar
+    şimdilik yalnızca kendi tarayıcında saklanır; diğer kullanıcılar
+    tarafından görülmesi için ortak bir veri tabanı eklememiz gerekir.
+  </div>
+
+  <div class="cards" id="liste"></div>
+
+  <section class="about">
+    <h2>Nasıl çalışır?</h2>
+    <p>1. Oyuncuları rütbe ve rolüne göre filtrele.</p>
+    <p>2. İlan oluştur düğmesine bas.</p>
+    <p>3. Bilgilerini gir ve ilanını kaydet.</p>
+    <p>Bu site bağımsız bir topluluk projesidir; Riot Games tarafından işletilmez veya onaylanmaz.</p>
+  </section>
+</main>
+
+<footer>© 2026 Valorant Takım Bul</footer>
+
+<dialog id="pencere">
+  <form id="form">
+    <h2>İlan oluştur</h2>
+    <div class="formrow">
+      <label for="ad">Oyuncu adın</label>
+      <input id="ad" maxlength="24" required>
+    </div>
+    <div class="formrow">
+      <label for="rutbe">Rütben</label>
+      <select id="rutbe" required>
+        <option value="">Rütbe seç</option>
+        <option>Demir</option><option>Bronz</option>
+        <option>Gümüş</option><option>Altın</option>
+        <option>Platin</option><option>Elmas</option>
+        <option>Yücelik</option><option>Ölümsüzlük</option>
+        <option>Radyant</option><option>Derecesiz</option>
+      </select>
+    </div>
+    <div class="formrow">
+      <label for="rol">Rolün</label>
+      <select id="rol" required>
+        <option value="">Rol seç</option>
+        <option>Düellocu</option><option>Öncü</option>
+        <option>Gözcü</option><option>Kontrol Uzmanı</option>
+      </select>
+    </div>
+    <div class="formrow">
+      <label for="aciklama">Açıklama</label>
+      <textarea id="aciklama" maxlength="180" placeholder="Nasıl takım arkadaşları arıyorsun?"></textarea>
+    </div>
+    <button class="red" type="submit">İlanı kaydet</button>
+    <button class="dark" type="button" id="kapat">Vazgeç</button>
+  </form>
+</dialog>
+
+<script>
+const ornekler=[
+ {ad:"AimMaster",rutbe:"Elmas",rol:"Düellocu",aciklama:"Dereceli maçlar için takım arıyorum.",ornek:true},
+ {ad:"SilentFox",rutbe:"Platin",rol:"Gözcü",aciklama:"Takım iletişimine önem veriyorum.",ornek:true},
+ {ad:"ClutchTR",rutbe:"Altın",rol:"Kontrol Uzmanı",aciklama:"Birlikte dereceli oynayalım.",ornek:true}
+];
+
+const $=id=>document.getElementById(id);
+const pencere=$("pencere");
+
+function oku(){
+  try{return JSON.parse(localStorage.getItem("vtb-oyuncular")||"[]")}
+  catch{return []}
+}
+
+function guvenli(metin){
+  return String(metin).replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[c]);
+}
+
+function goster(){
+  const arama=$("ara").value.toLocaleLowerCase("tr-TR");
+  const rutbe=$("rf").value;
+  const rol=$("rolf").value;
+  const oyuncular=[...oku(),...ornekler].filter(o=>
+    o.ad.toLocaleLowerCase("tr-TR").includes(arama)&&
+    (!rutbe||o.rutbe===rutbe)&&
+    (!rol||o.rol===rol)
+  );
+
+  $("liste").innerHTML=oyuncular.map(o=>`
+    <article class="card">
+      <h3>${guvenli(o.ad)}</h3>
+      <span class="tag">${guvenli(o.rutbe)}</span>
+      <span class="tag">${guvenli(o.rol)}</span>
+      <p>${guvenli(o.aciklama||"Açıklama eklenmemiş.")}</p>
+      <small style="color:#aaa">${o.ornek?"Örnek profil":"Bu tarayıcıda kayıtlı ilan"}</small>
+    </article>
+  `).join("")||"<p>Aramana uygun oyuncu bulunamadı.</p>";
+}
+
+$("ac").onclick=()=>pencere.showModal();
+$("kapat").onclick=()=>pencere.close();
+
+$("form").onsubmit=e=>{
+  e.preventDefault();
+  const ilan={
+    ad:$("ad").value.trim(),
+    rutbe:$("rutbe").value,
+    rol:$("rol").value,
+    aciklama:$("aciklama").value.trim(),
+    ornek:false
+  };
+  if(!ilan.ad)return;
+
+  try{
+    const ilanlar=oku();
+    ilanlar.unshift(ilan);
+    localStorage.setItem("vtb-oyuncular",JSON.stringify(ilanlar));
+  }catch{
+    alert("İlan kaydedilemedi. Tarayıcı depolama alanını kontrol et.");
+    return;
+  }
+
+  e.target.reset();
+  pencere.close();
+  goster();
+  alert("İlan kendi tarayıcına kaydedildi!");
+};
+
+["ara","rf","rolf"].forEach(id=>$(id).addEventListener("input",goster));
+goster();
+</script>
+</body>
+</html>
